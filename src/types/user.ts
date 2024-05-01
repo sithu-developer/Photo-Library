@@ -17,3 +17,12 @@ export interface UserOptions extends BaseOptions {
     password : number;
     rePassword : number ;
 }
+
+export interface GetUserOptions extends BaseOptions {
+    emailId : number;
+}
+
+export interface OnSuccessUserCheck {
+    exist ?: Boolean;
+    user : User
+}

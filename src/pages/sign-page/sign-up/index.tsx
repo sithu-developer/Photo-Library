@@ -1,8 +1,9 @@
 import { useAppDispatch } from "@/store/hook";
-import { userFunction } from "@/store/slices/userSlice";
-import { UserOptions } from "@/types/user";
+import { newUser } from "@/store/slices/userSlice";
+import { OnSuccessUserCheck, UserOptions } from "@/types/user";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography } from "@mui/material"
+import { User } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -29,8 +30,13 @@ const SignInPage = () => {
       if( user.password !== user.rePassword) {
         alert("Password must be same .")
       } else {
-        console.log({...user , email : user.email + "@gmail.com"});
-        dispatch(userFunction({...user , email : user.email + "@gmail.com" }))
+        dispatch(newUser({...user , email : user.email + "@gmail.com" , onSuccess : ( onSuccessUserCheck : OnSuccessUserCheck ) => {
+          localStorage.setItem("emailId" , String(onSuccessUserCheck.user.id) );
+          if(onSuccessUserCheck.exist) {
+            alert(`${onSuccessUserCheck.user.email} has been signed in before.`)
+          }
+          router.push("/") // add path here
+        }}))
       }
     }
 

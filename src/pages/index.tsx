@@ -1,9 +1,23 @@
 import { config } from "@/general/config";
+import { useAppDispatch } from "@/store/hook";
+import { getUser } from "@/store/slices/userSlice";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  
+  useEffect(() => {
+    const emailId = localStorage.getItem("emailId");
+    if(emailId) {
+      dispatch(getUser({ emailId : Number(emailId) , onSuccess : () => {
+        router.push("/sign-page/sign-in") // add path here
+      } }))
+    } 
+  } , [])
+
 
   return (
     <Box sx={{ width: "100vw" , height : "100vh" , display : "flex" , justifyContent : "center" , alignItems : "center" }}>
@@ -20,4 +34,5 @@ export default function Home() {
       </Paper>
     </Box>
   );
+  
 }
