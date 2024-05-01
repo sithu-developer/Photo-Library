@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 export default function Home() {
   const router = useRouter();
 
-  
   return (
     <Box sx={{ width: "100vw" , height : "100vh" , display : "flex" , justifyContent : "center" , alignItems : "center" }}>
       <Paper elevation={4} sx={{ display : "flex" ,width : "800px" , height : "600px" , bgcolor : "primary.main"}}>

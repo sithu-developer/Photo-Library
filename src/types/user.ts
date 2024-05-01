@@ -7,7 +7,8 @@ export interface UserInitialState {
 }
 
 export interface BaseOptions {
-
+    onError ?: (value ?: any ) => void;
+    onSuccess ?: (value ?: any ) => void;
 }
 
 export interface UserOptions extends BaseOptions { 

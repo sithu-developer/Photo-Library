@@ -1,6 +1,8 @@
+import { useAppDispatch } from "@/store/hook";
+import { userFunction } from "@/store/slices/userSlice";
 import { UserOptions } from "@/types/user";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
-import { Box, Button, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField, Typography } from "@mui/material"
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography } from "@mui/material"
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -13,6 +15,7 @@ const SignInPage = () => {
     const [ showPassword , setShowPassword ] = useState<boolean>(false);
     const [ showRePassword , setShowRePassword ] = useState<boolean>(false);
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     const handleShowPassword = () => {
         showPassword ? setShowPassword(false) : setShowPassword(true)
@@ -20,6 +23,15 @@ const SignInPage = () => {
 
     const handleShowRePassword = () => {
         showRePassword ? setShowRePassword(false) : setShowRePassword(true)
+    }
+
+    const handleUserFunction = () => {
+      if( user.password !== user.rePassword) {
+        alert("Password must be same .")
+      } else {
+        console.log({...user , email : user.email + "@gmail.com"});
+        dispatch(userFunction({...user , email : user.email + "@gmail.com" }))
+      }
     }
 
     return (
@@ -56,7 +68,7 @@ const SignInPage = () => {
                           onClick={handleShowPassword}
                           edge="end"
                         >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          {!showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -76,7 +88,7 @@ const SignInPage = () => {
                           onClick={handleShowRePassword}
                           edge="end"
                         >
-                          {showRePassword ? <VisibilityOff /> : <Visibility />}
+                          {!showRePassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -86,7 +98,7 @@ const SignInPage = () => {
         
                 <Box sx={{ display : "flex" , gap : "20px"}}>
                     <Button variant="contained" onClick={() => router.push("/")} >Back</Button>
-                    <Button variant="contained" type="submit" onClick={() => console.log({...user , email : user.email + "@gmail.com"})} disabled={!user.email || !user.name || !user.password || !user.rePassword } >Sign up</Button>
+                    <Button variant="contained" type="submit" onClick={handleUserFunction} disabled={!user.email || !user.name || !user.password || !user.rePassword } >Sign up</Button>
                 </Box>
             </Paper>
         </Box>
