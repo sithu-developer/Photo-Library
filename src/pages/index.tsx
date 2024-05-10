@@ -4,12 +4,14 @@ import { useEffect } from "react";
 
 
 export default function Home() {
+  
   const router = useRouter();
- useEffect(() => {
-  router.push("/app")
- } , [])
- return (
-  <Typography>Home Page</Typography>
- )
+  useEffect(() => {
+    router.push("/app")
+  } , []);
+
+  return (
+   <Typography>Home Page</Typography>
+  )
   
 }

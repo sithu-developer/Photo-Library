@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const defaultUser : SignInUserOptions = { 
-    email : "" , password : 0 
+    email : "" , password : ""
 }
 
 const SignInPage = () => {
@@ -21,12 +21,11 @@ const SignInPage = () => {
     }
     
     const handleUserSignIn = () => {
-        console.log(user)
         dispatch(signInUser({...user  , onError() {
             alert("Your email or password is incorrect!")
         }, onSuccess : () => {
             alert("You are successfully logged in.")
-            router.push("/") // add path here
+            router.push("/app/home-page")
         }}))
     }
 
@@ -47,7 +46,7 @@ const SignInPage = () => {
                 <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">password</InputLabel>
                   <OutlinedInput
-                    onChange={(event) => setUser({...user , password : Number(event.target.value)})}
+                    onChange={(event) => setUser({...user , password : String(event.target.value)})}
                     id="outlined-adornment-password"
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={

@@ -16,7 +16,7 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  password Int 
+  password String 
   name  String
   isArchived Boolean @default(false)
   createdAt              DateTime            @default(now())

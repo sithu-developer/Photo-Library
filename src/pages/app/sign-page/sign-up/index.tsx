@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const defaultUser : UserOptions = { 
-    email : "" , name : "" , password : 0 , rePassword : 0
+    email : "" , name : "" , password : "" , rePassword : ""
 }
 
 const SignUpPage = () => {
@@ -30,11 +30,12 @@ const SignUpPage = () => {
         alert("Password must be same .")
       } else {
         dispatch(newUser({...user , email : user.email + "@gmail.com" , onSuccess : ( onSuccessUserCheck : OnSuccessUserCheck ) => {
-          localStorage.setItem("emailId" , String(onSuccessUserCheck.user.id) );
           if(onSuccessUserCheck.exist) {
-            alert(`${onSuccessUserCheck.user.email} has been signed in before.`)
+            alert(`${onSuccessUserCheck.user.email} has been signed in before. Please sign in!`)
+          } else {
+            localStorage.setItem("emailId" , String(onSuccessUserCheck.user.id) );
+            router.push("/app/home-page") 
           }
-          router.push("/") // add path here
         }}))
       }
     }
@@ -63,7 +64,7 @@ const SignUpPage = () => {
                 <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">password</InputLabel>
                   <OutlinedInput
-                    onChange={(event) => setUser({...user , password : Number(event.target.value)})}
+                    onChange={(event) => setUser({...user , password : String(event.target.value)})}
                     id="outlined-adornment-password"
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
@@ -83,7 +84,7 @@ const SignUpPage = () => {
                 <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">re-password</InputLabel>
                   <OutlinedInput
-                    onChange={(event) => setUser({...user , rePassword : Number(event.target.value)})}
+                    onChange={(event) => setUser({...user , rePassword : String(event.target.value)})}
                     id="outlined-adornment-re-password"
                     type={showRePassword ? 'text' : 'password'}
                     endAdornment={

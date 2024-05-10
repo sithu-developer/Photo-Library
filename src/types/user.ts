@@ -14,13 +14,13 @@ export interface BaseOptions {
 export interface UserOptions extends BaseOptions { 
     email : string;
     name : string;
-    password : number;
-    rePassword : number ;
+    password : string;
+    rePassword : string ;
 }
 
 export interface SignInUserOptions extends BaseOptions {
     email : string;
-    password : number;
+    password : string;
 }
 
 

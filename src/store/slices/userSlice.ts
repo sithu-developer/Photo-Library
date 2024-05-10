@@ -48,7 +48,6 @@ export const signInUser = createAsyncThunk("userSlice/signIn" , async( options :
         onSuccess && onSuccess();
     } catch(err) {
         onError && onError()
-        console.log(err)
     }
 })
 
