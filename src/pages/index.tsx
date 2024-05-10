@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/router"
 import { useEffect } from "react";
 
@@ -11,7 +11,10 @@ export default function Home() {
   } , []);
 
   return (
-   <Typography>Home Page</Typography>
+    <Box>
+      <Typography>Home Page1</Typography>
+    </Box>
+
   )
   
 }

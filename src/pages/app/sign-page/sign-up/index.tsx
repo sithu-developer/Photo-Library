@@ -31,9 +31,8 @@ const SignUpPage = () => {
       } else {
         dispatch(newUser({...user , email : user.email + "@gmail.com" , onSuccess : ( onSuccessUserCheck : OnSuccessUserCheck ) => {
           if(onSuccessUserCheck.exist) {
-            alert(`${onSuccessUserCheck.user.email} has been signed in before. Please sign in!`)
+            alert(`${onSuccessUserCheck.email} has been signed up before. Please sign in!`)
           } else {
-            localStorage.setItem("emailId" , String(onSuccessUserCheck.user.id) );
             router.push("/app/home-page") 
           }
         }}))
@@ -41,7 +40,7 @@ const SignUpPage = () => {
     }
 
     return (
-        <Box sx={{ display : "flex" , justifyContent : "center" , alignItems : "center" , height : "100vh" , bgcolor : "lightgray" }}>
+        <Box sx={{ display : "flex" , justifyContent : "center" , alignItems : "center" , height : "100vh" , bgcolor : "lightgray" , width : "100vw" }}>
             <Paper sx={{ display : "flex" , flexDirection : "column" , gap : "20px" , width : "400px" , p : "20px" , bgcolor : "info.main"}}>
                 <Typography variant="h6" sx={{ textAlign : "center"}}>Sign Up</Typography>
                 <FormControl variant="outlined">

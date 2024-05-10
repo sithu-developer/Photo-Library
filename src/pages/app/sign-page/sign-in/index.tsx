@@ -22,15 +22,19 @@ const SignInPage = () => {
     
     const handleUserSignIn = () => {
         dispatch(signInUser({...user  , onError() {
-            alert("Your email or password is incorrect!")
-        }, onSuccess : () => {
-            alert("You are successfully logged in.")
-            router.push("/app/home-page")
+            alert("This email is not sign up before , please sign up!")
+        }, onSuccess : (isPasswordIncorrect ?: boolean ) => {
+            if(isPasswordIncorrect) {
+              alert("Your password is incorrect.")
+            } else {
+              alert("You are successfully logged in.")
+              router.push("/app/home-page")
+            }
         }}))
     }
 
     return (
-        <Box sx={{ display : "flex" , justifyContent : "center" , alignItems : "center" , height : "100vh" , bgcolor : "lightgray" }}>
+        <Box sx={{ display : "flex" , justifyContent : "center" , alignItems : "center" , height : "100vh" , bgcolor : "lightgray" , width : "100vw" }}>
             <Paper sx={{ display : "flex" , flexDirection : "column" , gap : "20px" , width : "400px" , p : "20px" , bgcolor : "info.main"}}>
                 <Typography variant="h6" sx={{ textAlign : "center"}}>Sign In</Typography>
                 <FormControl variant="outlined">

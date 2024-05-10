@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { ReactNode, useEffect } from "react";
 import SideBar from "./SideBar";
+import TopBar from "./TopBar";
 
 interface Props {
     children : ReactNode;
@@ -23,10 +24,13 @@ const PageLayout = ( {children} : Props ) => {
     } , [])
     
     return (
+      <Box>
+        <TopBar />
         <Box sx={{ display : "flex" }}>
             <SideBar />
-            {children}
+            <Box>{children}</Box>
         </Box>
+      </Box>
     )
 }
 

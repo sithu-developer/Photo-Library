@@ -30,5 +30,5 @@ export interface GetUserOptions extends BaseOptions {
 
 export interface OnSuccessUserCheck {
     exist ?: Boolean;
-    user : User
+    email : string;
 }

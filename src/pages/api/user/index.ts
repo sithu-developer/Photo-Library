@@ -22,7 +22,7 @@ export default async function handler(
       const valid = name && email && password;
       if(!valid) return res.status(400).send("Bad request");
       const checkUser = await prisma.user.findUnique({ where : { email , isArchived : false }});
-      if(checkUser) return res.status(200).json( { user : checkUser , exist : true })
+      if(checkUser) return res.status(200).json( { exist : true })
       const user = await prisma.user.create({ data : { name , email , password }});
       return res.status(200).json({ user });
     } else if( method === "GET") {
@@ -30,9 +30,9 @@ export default async function handler(
       const email1 = String(email);
       const password1 = String(password);
       const valid = await prisma.user.findUnique({ where : { email : email1 }});
-      if(!valid) return res.status(400).send("Bad request1")
-      if(password1 !== valid.password) return res.status(400).send("Bad request2")
-      return res.status(200).json({ user : valid })
+      if(!valid) return res.status(400).send("Bad request")
+      if(password1 !== valid.password) return res.status(200).json({ isPasswordIncorrect : true })
+      return res.status(200).json({ user : valid });
     }
 // here
   res.status(401).send("Invalid method .");

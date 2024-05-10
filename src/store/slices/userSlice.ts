@@ -32,8 +32,9 @@ export const newUser = createAsyncThunk("userSlice/newUser" , async( options : U
             body : JSON.stringify({ name , email , password })
         });
         const  { user  , exist } = await response.json();
-        thunkApi.dispatch(addUser(user))
-        onSuccess && onSuccess( { user , exist } );
+        console.log(user , " and ", exist)
+        if( !exist ) thunkApi.dispatch(setUser(user));
+        onSuccess && onSuccess( { email , exist } );
     } catch (err) {
         onError && onError();
     }
@@ -43,9 +44,9 @@ export const signInUser = createAsyncThunk("userSlice/signIn" , async( options :
     const { email , password , onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/user?email=${email}&password=${password}`)
-        const { user } = await response.json();
-        thunkApi.dispatch(setUser( user ))
-        onSuccess && onSuccess();
+        const { user , isPasswordIncorrect } = await response.json();
+        if( !isPasswordIncorrect ) thunkApi.dispatch(setUser( user ));
+        onSuccess && onSuccess(isPasswordIncorrect);
     } catch(err) {
         onError && onError()
     }
@@ -55,15 +56,13 @@ const userSlice = createSlice({
     name : "userSlice",
     initialState ,
     reducers : {
-        addUser : ( state , action : PayloadAction<User> ) => {
-            state.items =  [...state.items , action.payload ];
-        },
         setUser : ( state , action : PayloadAction<User>) => {
             state.items = [ action.payload ];
+            localStorage.setItem("emailId" , String(action.payload.id) )
         }
     },
 })
 
-export const {addUser , setUser } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
