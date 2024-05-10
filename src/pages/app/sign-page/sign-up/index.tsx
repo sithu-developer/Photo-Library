@@ -3,7 +3,6 @@ import { newUser } from "@/store/slices/userSlice";
 import { OnSuccessUserCheck, UserOptions } from "@/types/user";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography } from "@mui/material"
-import { User } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -11,7 +10,7 @@ const defaultUser : UserOptions = {
     email : "" , name : "" , password : 0 , rePassword : 0
 }
 
-const SignInPage = () => {
+const SignUpPage = () => {
     const [ user , setUser ] = useState<UserOptions>(defaultUser);
     const [ showPassword , setShowPassword ] = useState<boolean>(false);
     const [ showRePassword , setShowRePassword ] = useState<boolean>(false);
@@ -110,4 +109,4 @@ const SignInPage = () => {
         </Box>
     )
 }
-export default SignInPage;
+export default SignUpPage;

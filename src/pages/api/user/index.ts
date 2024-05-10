@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/general/prismaClient";
-import { GetUserOptions } from "@/types/user";
+import { GetUserOptions, SignInUserOptions } from "@/types/user";
+import { Password } from "@mui/icons-material";
 import { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -24,6 +25,18 @@ export default async function handler(
         const user = await prisma.user.findUnique({ where : { id : Number(emailId) , isArchived : false }});
         if(!user) return res.status(400).send("Bad request");
         return res.status(200).json({ user });
+    } else if( method === "GET") {
+      const { email , password } = req.query;
+      const email1 = String(email);
+      const password1 = Number(password);
+      const valid = await prisma.user.findUnique({ where : { email : email1 }});
+      console.log(email1 , password1)
+      if(!valid) return res.status(400).send("Bad request1")
+        console.log("one")
+      if(password1 !== valid.password) return res.status(400).send("Bad request2")
+        console.log("two")
+      return res.status(200).json({ user : valid })
     }
+// here
   res.status(401).send("Invalid method .");
 }

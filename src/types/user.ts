@@ -18,6 +18,12 @@ export interface UserOptions extends BaseOptions {
     rePassword : number ;
 }
 
+export interface SignInUserOptions extends BaseOptions {
+    email : string;
+    password : number;
+}
+
+
 export interface GetUserOptions extends BaseOptions {
     emailId : number;
 }

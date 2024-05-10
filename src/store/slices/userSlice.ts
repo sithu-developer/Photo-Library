@@ -1,5 +1,5 @@
 import { config } from "@/general/config";
-import { GetUserOptions, UserInitialState, UserOptions } from "@/types/user";
+import { GetUserOptions, SignInUserOptions, UserInitialState, UserOptions } from "@/types/user";
 import { User } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -21,7 +21,7 @@ export const getUser = createAsyncThunk("userSlice" , async( options : GetUserOp
     }
 })
 
-export const newUser = createAsyncThunk("userSlice" , async( options : UserOptions , thunkApi) => {
+export const newUser = createAsyncThunk("userSlice/newUser" , async( options : UserOptions , thunkApi) => {
     const { name , email , password , onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/user` , {
@@ -36,6 +36,19 @@ export const newUser = createAsyncThunk("userSlice" , async( options : UserOptio
         onSuccess && onSuccess( { user , exist } );
     } catch (err) {
         onError && onError();
+    }
+})
+
+export const signInUser = createAsyncThunk("userSlice/signIn" , async( options : SignInUserOptions , thunkApi ) => {
+    const { email , password , onError , onSuccess } = options;
+    try {
+        const response = await fetch(`${config.apiBaseUrl}/user?email=${email}&password=${password}`)
+        const { user } = await response.json();
+        thunkApi.dispatch(setUser( user ))
+        onSuccess && onSuccess();
+    } catch(err) {
+        onError && onError()
+        console.log(err)
     }
 })
 
