@@ -18,7 +18,7 @@ const PageLayout = ( {children} : Props ) => {
       const emailId = localStorage.getItem("emailId");
       if(emailId) {
         dispatch(getUser({ emailId : Number(emailId) , onSuccess : () => {
-          router.push("/app/home-page") 
+          router.push(router.pathname.includes("/app")? router.pathname : "/app/home-page") 
         } }))
       } 
     } , [])

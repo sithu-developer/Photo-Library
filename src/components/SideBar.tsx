@@ -27,13 +27,13 @@ const SideBar = () => {
 
 export default SideBar;
 
-interface Icon {
+export interface ListItems {
   id : number;
   icon : any;
   name : string;
   pageLink : string;
 }
-export const icons : Icon[] = [
+export const icons : ListItems[] = [
   { 
     id : 1,
     icon : HomeIcon,
@@ -44,7 +44,7 @@ export const icons : Icon[] = [
     id : 2,
     icon : CloudUploadIcon,
     name : "Upload",
-    pageLink : "/"
+    pageLink : "upload-page"
   },
   {
     id : 3,

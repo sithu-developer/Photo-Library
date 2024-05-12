@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 
 export interface UserInitialState {
-    items : User[];
+    item : User | null;
     isLoading : Boolean;
     error : Error | null;
 }

@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState : UserInitialState  = {
-    items : [],
+    item : null,
     isLoading : false,
     error : null
 }
@@ -57,7 +57,7 @@ const userSlice = createSlice({
     initialState ,
     reducers : {
         setUser : ( state , action : PayloadAction<User>) => {
-            state.items = [ action.payload ];
+            state.item =  action.payload ;
             localStorage.setItem("emailId" , String(action.payload.id) )
         }
     },
