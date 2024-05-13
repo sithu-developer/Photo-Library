@@ -18,12 +18,12 @@ export default async function handler(
       if(!user) return res.status(400).send("Bad request");
       return res.status(200).json({ user });
     } else if(method === "POST") {
-      const { name , email , password } = JSON.parse(req.body) as User;
+      const { name , email , password , gender } = JSON.parse(req.body) as User;
       const valid = name && email && password;
       if(!valid) return res.status(400).send("Bad request");
       const checkUser = await prisma.user.findUnique({ where : { email , isArchived : false }});
       if(checkUser) return res.status(200).json( { exist : true })
-      const user = await prisma.user.create({ data : { name , email , password }});
+      const user = await prisma.user.create({ data : { name , email , password , gender }});
       return res.status(200).json({ user });
     } else if( method === "GET") {
       const { email , password } = req.query;

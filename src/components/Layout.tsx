@@ -13,14 +13,20 @@ interface Props {
 const PageLayout = ( {children} : Props ) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const pageParth = router.pathname;
+    const isHomePage = (pageParth === "/")
+    const isAppPage= (pageParth === "/app");
+    const isSignPage = pageParth.includes("/app/sign-page");
     
     useEffect(() => {
       const emailId = localStorage.getItem("emailId");
       if(emailId) {
         dispatch(getUser({ emailId : Number(emailId) , onSuccess : () => {
-          router.push(router.pathname.includes("/app")? router.pathname : "/app/home-page") 
+          router.push( (isAppPage || isHomePage || isSignPage)?  "/app/home-page" : router.pathname) 
         } }))
-      } 
+      } else {
+        router.push("/app") // not signed in
+      }
     } , [])
     
     return (

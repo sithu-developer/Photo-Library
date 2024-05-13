@@ -16,6 +16,7 @@ export interface UserOptions extends BaseOptions {
     name : string;
     password : string;
     rePassword : string ;
+    gender : "male" | "female" | "other";
 }
 
 export interface SignInUserOptions extends BaseOptions {

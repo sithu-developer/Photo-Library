@@ -7,10 +7,11 @@ import { useRouter } from "next/router";
 const SideBar = () => {
   const router = useRouter();
   const pageParth = router.pathname;
-  const isAppPage = (pageParth === "/app");
+  const isHomePage = (pageParth === "/")
+  const isAppPage= (pageParth === "/app");
   const isSignPage = pageParth.includes("/app/sign-page");
 
-  if( isAppPage || isSignPage ) return null;
+  if( isAppPage || isSignPage || isHomePage ) return null;
      return (
         <Box sx={{ display : "flex" , flexDirection : "column" , width : "fit-content" , borderRight : "0.1px solid #DFD0B8" , height : "100vh"  }}>
           <List>

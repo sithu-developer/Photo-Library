@@ -22,14 +22,14 @@ export const getUser = createAsyncThunk("userSlice" , async( options : GetUserOp
 })
 
 export const newUser = createAsyncThunk("userSlice/newUser" , async( options : UserOptions , thunkApi) => {
-    const { name , email , password , onError , onSuccess } = options;
+    const { name , email , password , gender , onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/user` , {
             method : "POST",
             headers : {
                 "Content-Type" : "applicatioin/json"
             },
-            body : JSON.stringify({ name , email , password })
+            body : JSON.stringify({ name , email , password , gender })
         });
         const  { user  , exist } = await response.json();
         console.log(user , " and ", exist)
@@ -59,10 +59,14 @@ const userSlice = createSlice({
         setUser : ( state , action : PayloadAction<User>) => {
             state.item =  action.payload ;
             localStorage.setItem("emailId" , String(action.payload.id) )
+        },
+        removeUser : ( state ) => {
+            localStorage.removeItem("emailId");
+            state.item = null;
         }
     },
 })
 
-export const { setUser } = userSlice.actions;
+export const { setUser , removeUser } = userSlice.actions;
 
 export default userSlice.reducer;

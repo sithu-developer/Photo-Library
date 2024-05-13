@@ -2,12 +2,13 @@ import { useAppDispatch } from "@/store/hook";
 import { newUser } from "@/store/slices/userSlice";
 import { OnSuccessUserCheck, UserOptions } from "@/types/user";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography } from "@mui/material"
+import { Box, Button, FormControl, FormControlLabel, FormLabel, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Radio, RadioGroup, Typography } from "@mui/material"
+import { Gender } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 const defaultUser : UserOptions = { 
-    email : "" , name : "" , password : "" , rePassword : ""
+    email : "" , name : "" , password : "" , rePassword : "" , gender : "female"
 }
 
 const SignUpPage = () => {
@@ -44,9 +45,9 @@ const SignUpPage = () => {
             <Paper sx={{ display : "flex" , flexDirection : "column" , gap : "20px" , width : "400px" , p : "20px" , bgcolor : "info.main"}}>
                 <Typography variant="h6" sx={{ textAlign : "center"}}>Sign Up</Typography>
                 <FormControl variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">name</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-password">Full name</InputLabel>
                     <OutlinedInput
-                        label="name"
+                        label="Full name"
                         onChange={(event) => setUser({...user , name : event.target.value })}
                     />
                 </FormControl>
@@ -59,6 +60,20 @@ const SignUpPage = () => {
                         aria-describedby="outlined-weight-helper-text"
                         onChange={(event) => setUser({ ...user , email : event.target.value})}
                     />
+                </FormControl>
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                    name="radio-buttons-group"
+                    sx={{ display : "flex" , flexDirection : "row" , gap : "20px" }}
+                    onChange={(event) => setUser({...user , gender : event.target.value as Gender })}
+                  >
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                  </RadioGroup>
                 </FormControl>
                 <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">password</InputLabel>
@@ -102,7 +117,7 @@ const SignUpPage = () => {
                 </FormControl>
         
                 <Box sx={{ display : "flex" , gap : "20px"}}>
-                    <Button variant="contained" onClick={() => router.push("/")} >Back</Button>
+                    <Button variant="contained" onClick={() => router.push("/app")} >Back</Button>
                     <Button variant="contained" type="submit" onClick={handleUserFunction} disabled={!user.email || !user.name || !user.password || !user.rePassword } >Sign up</Button>
                 </Box>
             </Paper>

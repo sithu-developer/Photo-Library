@@ -38,7 +38,7 @@ const SignInPage = () => {
             <Paper sx={{ display : "flex" , flexDirection : "column" , gap : "20px" , width : "400px" , p : "20px" , bgcolor : "info.main"}}>
                 <Typography variant="h6" sx={{ textAlign : "center"}}>Sign In</Typography>
                 <FormControl variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">email</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-email">email</InputLabel>
                     <OutlinedInput
                         label="email"
                         id="outlined-adornment-email"
@@ -69,7 +69,7 @@ const SignInPage = () => {
                 </FormControl>
         
                 <Box sx={{ display : "flex" , gap : "20px"}}>
-                    <Button variant="contained" onClick={() => router.push("/")} >Back</Button>
+                    <Button variant="contained" onClick={() => router.push("/app")} >Back</Button>
                     <Button variant="contained" type="submit" onClick={handleUserSignIn} disabled={!user.email || !user.password } >Sign In</Button>
                 </Box>
             </Paper>
