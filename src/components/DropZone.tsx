@@ -1,25 +1,23 @@
 
 import { Box } from '@mui/material'
 import {useDropzone} from 'react-dropzone'
-import FlipCameraIosOutlinedIcon from '@mui/icons-material/FlipCameraIosOutlined';
-import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
+interface Props {
+  setPhotoFile : ( value : File ) => void;
+}
 
-const DropZone = () => {
+const DropZone = ({setPhotoFile} : Props ) => {
 
-    const onDrop = ( file : File[]) => {
-        console.log(file[0].name) // continue here
-    }
+  const onDrop = ( file : File[]) => {
+      setPhotoFile(file[0]);
+  }
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
-
   return (
     <Box {...getRootProps()}>
-        {isDragActive ?
-        <ArrowDownwardOutlinedIcon sx={{ fontSize : "50px" , cursor : "pointer"}} />
-        :<FlipCameraIosOutlinedIcon sx={{ fontSize : "50px" , cursor : "pointer"}} />
-        }
+        <ModeEditIcon sx={{ fontSize : "20px"  , cursor : "pointer"}} />
         <input {...getInputProps()} />
     </Box>
   )
