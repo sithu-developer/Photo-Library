@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/general/prismaClient";
 import { GetUserOptions, SignInUserOptions } from "@/types/user";
-import { Password } from "@mui/icons-material";
 import { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -34,6 +33,5 @@ export default async function handler(
       if(password1 !== valid.password) return res.status(200).json({ isPasswordIncorrect : true })
       return res.status(200).json({ user : valid });
     }
-// here
   res.status(401).send("Invalid method .");
 }
