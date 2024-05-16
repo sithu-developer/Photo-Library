@@ -48,7 +48,7 @@ const MyProfile = () => {
                 </FormControl>
                 <Box sx={{ display : "flex" , gap : "20px"}}>
                     <Button variant="contained">Cancel</Button>
-                    <Button variant="contained">Upgrate</Button>
+                    <Button variant="contained">Save changes</Button>
                 </Box>
             </Box>
         </Box>
