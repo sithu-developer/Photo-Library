@@ -33,3 +33,7 @@ export interface OnSuccessUserCheck {
     exist ?: Boolean;
     email : string;
 }
+
+export interface UpdatedUserOptions extends User , BaseOptions {
+    
+}

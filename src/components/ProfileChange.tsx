@@ -22,7 +22,7 @@ const ProfileChange = ({ open , setOpen , updatedUser } : Props) => {
                 body : formData,
             });
             const { photoSrc } = await response.json();
-            console.log( "src : " , photoSrc);
+            console.log( "src : " , photoSrc); // profile photo is ending here
         }
     }
     useEffect(() => {

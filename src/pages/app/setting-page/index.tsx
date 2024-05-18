@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { removeUser } from "@/store/slices/userSlice";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
-import KeyOutlinedIcon from '@mui/icons-material/KeyOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const SettingPage = () => {
     const user = useAppSelector(store => store.user.item);
@@ -56,8 +56,8 @@ export const settingButtonItems : ListItems[] = [
     },
     {
         id : 2,
-        icon : KeyOutlinedIcon,
-        name : "Password",
-        pageLink : "password"
+        icon : LockOutlinedIcon,
+        name : "Account",
+        pageLink : "account"
     },
 ]

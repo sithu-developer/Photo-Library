@@ -1,5 +1,5 @@
 import { config } from "@/general/config";
-import { GetUserOptions, SignInUserOptions, UserInitialState, UserOptions } from "@/types/user";
+import { BaseOptions, GetUserOptions, SignInUserOptions, UpdatedUserOptions, UserInitialState, UserOptions } from "@/types/user";
 import { User } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -27,7 +27,7 @@ export const newUser = createAsyncThunk("userSlice/newUser" , async( options : U
         const response = await fetch(`${config.apiBaseUrl}/user` , {
             method : "POST",
             headers : {
-                "Content-Type" : "applicatioin/json"
+                "Content-type" : "applicatioin/json"
             },
             body : JSON.stringify({ name , email , password , gender })
         });
@@ -52,6 +52,24 @@ export const signInUser = createAsyncThunk("userSlice/signIn" , async( options :
     }
 })
 
+export const updateUser = createAsyncThunk("userSlice/updateUser" , async( options : UpdatedUserOptions , thunkApi ) => {
+    const { id , name , gender , photoSrc , onError , onSuccess } = options;
+    try {
+        const response = await fetch(`${config.apiBaseUrl}/user` , {
+            method : "PUT",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            body : JSON.stringify( { id , name , gender , photoSrc } )
+        });
+        const { user } = await response.json();
+        thunkApi.dispatch(replaceUser( user ));
+        onSuccess && onSuccess();
+    } catch ( err ) {
+        onError && onError();
+    }
+})
+
 const userSlice = createSlice({
     name : "userSlice",
     initialState ,
@@ -63,10 +81,13 @@ const userSlice = createSlice({
         removeUser : ( state ) => {
             localStorage.removeItem("emailId");
             state.item = null;
+        },
+        replaceUser : (state , action : PayloadAction<User>) => {
+            state.item = action.payload;
         }
     },
 })
 
-export const { setUser , removeUser } = userSlice.actions;
+export const { setUser , removeUser , replaceUser } = userSlice.actions;
 
 export default userSlice.reducer;

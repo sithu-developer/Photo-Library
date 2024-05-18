@@ -1,17 +1,21 @@
-import { useAppSelector } from "@/store/hook";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { Box, Button, Chip, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material"
 import { Gender, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import ProfileChange from "@/components/ProfileChange";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { updateUser } from "@/store/slices/userSlice";
+import { useRouter } from "next/router";
 
 
 
 
 const MyProfile = () => {
     const user = useAppSelector(store => store.user.item);
+    const dispatch = useAppDispatch();
     const [ updatedUser , setUpdatedUser ] = useState<User>()
     const [ open , setOpen ] = useState<boolean>(false)
+    const router = useRouter();
     
     useEffect(() => {
         if(user) {
@@ -20,6 +24,13 @@ const MyProfile = () => {
     } , [user])
 
     if(!updatedUser ) return null;
+
+    const handleUpdateUser = () => {
+        dispatch(updateUser({...updatedUser , onSuccess : () => {
+            router.push("/app/setting-page");
+        }}))
+    }
+
     return (
         <Box sx={{ p : "10px" , display : "flex" , justifyContent : "center" , width : "100vw" }}>
             <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "20px" , width : "400px" }}>
@@ -47,8 +58,8 @@ const MyProfile = () => {
                   </RadioGroup>
                 </FormControl>
                 <Box sx={{ display : "flex" , gap : "20px"}}>
-                    <Button variant="contained">Cancel</Button>
-                    <Button variant="contained">Save changes</Button>
+                    <Button variant="contained" onClick={() => router.push("/app/setting-page")}>Cancel</Button>
+                    <Button variant="contained" onClick={handleUpdateUser} >Save changes</Button>
                 </Box>
             </Box>
         </Box>

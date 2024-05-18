@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/general/prismaClient";
-import { GetUserOptions, SignInUserOptions } from "@/types/user";
+import { GetUserOptions, SignInUserOptions, UpdatedUserOptions } from "@/types/user";
 import { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -32,6 +32,14 @@ export default async function handler(
       if(!valid) return res.status(400).send("Bad request")
       if(password1 !== valid.password) return res.status(200).json({ isPasswordIncorrect : true })
       return res.status(200).json({ user : valid });
+    } else if ( method === "PUT") {
+      const { id ,  name , gender , photoSrc } = req.body as UpdatedUserOptions;
+      const valid = name && gender;
+      if(!valid) return res.status(400).send("Bad request");
+      const exit = await prisma.user.findUnique({ where : { id , isArchived : false }});
+      if(!exit) return res.status(400).send("Bad request");
+      const user = await prisma.user.update({ where : { id } , data : { name , gender , photoSrc }});
+      return res.status(200).json({ user });
     }
   res.status(401).send("Invalid method .");
 }
